@@ -1,0 +1,26 @@
+title: Network Node Operator
+description: Represents a node providing services to the network as defined in the registry. 
+type: object
+properties:  
+  node_id:
+    description: A universally unique identifier of the node.
+    type: string
+  uri:
+    description: The callback URI of the Node.
+    $ref: '#/components/schema/Url'
+  role:
+    $ref: '#/components/schema/NetworkRole'
+  public_key:
+    description: The encryption public key of the buyer supporting node as defined in the registry
+    type: string
+  fulfillment_modes:
+    description: The network defined fulfillment modes that this node provides.
+    type: array
+    minItems: 1
+    items:
+      $ref: '#/components/schema/FulfillmentMode'
+  serviceable_region:
+    type: array
+    minItems: 3
+    items:
+      $ref: '#/components/schema/Coordinates'

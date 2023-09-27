@@ -1,0 +1,18 @@
+title: Cancelation Term
+description: Describes the cancellation terms of an order.
+type: object
+properties:
+  fulfillment_status:
+    description: The statuses of fulfillment during which this term is applicable.
+    type: array
+    items:
+      $ref: "#/components/schemas/FulfillmentStatus"
+  reason_required:
+    description: Indicates whether a reason is required to cancel the order
+    type: boolean
+  cancellation_fee:
+    $ref: '#/components/schemas/Fee'
+required:
+  - fulfillment_state
+  - reason_required
+  - cancellation_fee

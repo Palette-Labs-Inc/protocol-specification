@@ -1,0 +1,953 @@
+openapi: 3.0.0
+info:
+  title: The Universal Transaction Protocol (UTP)
+  description: Transaction API specification for primary UTP commerce definitions
+  version: 0.0.0
+security:
+  - NodeAuth: []
+paths:
+  /merchant/search:
+    post:
+      summary: search merchants
+      tags:
+        - Seller Supporting Node (SSN)
+      description: The <code>BSN</code> broadcasts the customer's request for merchants offering products or services
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Merchant Search
+              description: Required search parameters for a Buyer Supporting Node (BSN) to query a Seller Supporting Node (SSN)
+              type: object
+              properties:
+                context:
+                  $ref: '#/components/schemas/Context'
+                intent:
+                  description: Represents a buyers intent to purchase a product or a service from a merchant.
+                  type: object
+                  properties:
+                    search_string:
+                      description: A raw free text search string describing the name or description of a seller.
+                      type: string
+                    coordinates:
+                      description: 'The location coordinates where the transaction is to be fulfilled. Typically, the location of the customer. Used by the Seller Supporting Node (SSN) to filter providers.'
+                      $ref: '#/components/schemas/Coordinates'
+                    fulfillment_modes:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/FulfillmentMode'
+                    merchant_type:
+                      description: Defines the buyer's intended merchant typ(s).
+                      type: array
+                      items:
+                        type: string
+                      enum:
+                        - FOOD
+                        - CONVENIENCE
+                        - GROCEERY
+                        - PETS
+                        - FLOWERS
+                        - PACKAGES
+                        - ALCOHOL
+                    cuisine_types:
+                      description: Defines the cuisine type(s) when the merchant type is 'Food.'
+                      type: array
+                      items:
+                        type: string
+                      enum:
+                        - MEXICAN
+                        - SEAFOOD
+                        - FRENCH
+                        - THAI
+                        - BURGERS
+                        - INDIAN
+                        - DRINKS
+                        - AMERICAN
+                        - CHINESE
+                        - FAST_FOOD
+                        - DESSERT
+              required:
+                - context
+                - intent
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+          description: The page number for pagination (optional)
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          description: The number of items per page (optional)
+      responses:
+        '200':
+          description: A catalog of merchants represented by the <code>Seller Supporting Node (SSN)</code>
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    description: an array of merchants from the Seller Supporting Node (SSN)
+                    items:
+                      $ref: '#/components/schemas/Merchant'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  terms:
+                    $ref: '#/components/schemas/Terms'
+        '404':
+          description: No data found for the provided value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/merchant/{merchant_id}':
+    parameters:
+      - name: merchant_id
+        description: A unique identifier for the merchant. Can be one of the following unique identifiers for a merchant - <ul> <li><code>id</code></li> <li><code>slug</code></li> </ul>
+        in: path
+        required: true
+        schema:
+          oneOf:
+            - $ref: '#/components/schemas/Merchant/properties/id'
+            - $ref: '#/components/schemas/Merchant/properties/slug'
+    get:
+      summary: get a merchant
+      responses:
+        '200':
+          description: A single merchant represented by the <code>Seller Supporting Node (SSN)</code>
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Merchant'
+                  terms:
+                    $ref: '#/components/schemas/Terms'
+        '404':
+          description: No data found for the provided value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/catalog/{merchant_id}/search':
+    post:
+      summary: search a catalog
+      tags:
+        - Seller Supporting Node (SSN)
+      description: The <code>BSN</code> broadcasts the customer's request for a catalog offering specific products or services
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Catalog Search Intent
+              description: Represents a buyers intent to search a product or a service from a merchants catalog.
+              type: object
+              properties:
+                context:
+                  $ref: '#/components/schemas/Context'
+                intent:
+                  description: A buyers intent to avail specific products or services from a merchant catalog
+                  type: object
+                  properties:
+                    item_search_string:
+                      description: A raw free text search string describing the name or description of a <code>CatalogItem</code>
+                      type: string
+                    item_price_types:
+                      description: 'An array of item price types to be returned in the Catalog. If left blank, it is assumed that the buyer intends to view <code>CatalogItem</code>''s for all possible price types.'
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/CatalogItemPriceType'
+                    fulfillment_modes:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/FulfillmentMode'
+                    include_modifiers:
+                      default: false
+                      description: A boolean value indicating whether modifer groups and modifier items should be returned.
+              required:
+                - context
+                - intent
+      parameters:
+        - name: merchant_id
+          description: A unique identifier for the merchant. Can be one of the following unique identifiers for a merchant - <ul> <li><code>id</code></li> <li><code>slug</code></li> </ul>
+          in: path
+          required: true
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/Merchant/properties/id'
+              - $ref: '#/components/schemas/Merchant/properties/slug'
+      responses:
+        '200':
+          description: A catalog of merchants represented by the <code>Seller Supporting Node (SSN)</code>
+          content:
+            application/json:
+              schema:
+                type: object
+                description: The catalog data for the merchant
+                properties:
+                  catalogs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Catalog'
+                  categories:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CatalogCategory'
+                  modifier_groups:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CatalogModifierGroup'
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CatalogItem'
+                  modifier_items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CatalogItemModifier'
+        '404':
+          description: No data found for the provided value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/item/{item_id}/modifiers':
+    parameters:
+      - name: item_id
+        description: A unique identifier for the item.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: get item modifiers
+      responses:
+        '200':
+          description: A single merchant represented by the <code>Seller Supporting Node (SSN)</code>
+          content:
+            application/json:
+              schema:
+                type: object
+                description: The catalog data for the merchant
+                properties:
+                  item:
+                    description: The <code>CatalogItem</code> affiliated with the <code>item_id</code> parameter in the path parameter.
+                    $ref: '#/components/schemas/CatalogItem'
+                  modifier_groups:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CatalogModifierGroup'
+                  modifier_items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CatalogItemModifier'
+        '404':
+          description: No data found for the provided value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  securitySchemes:
+    NodeAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Signature of message body using BSN or SSN signing public key as defined in the registry. <br/><br/>Format:<br/><br/><code>Authorization: Signature keyId="{subscriber_id}|{unique_key_id}|{algorithm}",algorithm="ed25519",created="1606970629",expires="1607030629",headers="(created) (expires) digest",signature="Base64(signing string)"</code>'
+  schemas:
+    FulfillmentMode:
+      title: Fulfillment Mode
+      description: Defines a method for acquiring a product or service
+      type: string
+      enum:
+        - PICKUP
+        - SHIPMENT
+        - DELIVERY
+        - APPOINTMENT
+    ProviderType:
+      title: Provider Type
+      description: 'Defines the provider type. The network policy should contain codes for all of the provider sectors or industries supported by the network. For the sake of performance, network members should take considerable time determining industry code granualrity. If industry codes are too broad, for example "delivery", search intents will be broadcast to Seller Supporting Node (SSN)''''s who do not support the Buyer Supporting Node (BSN)s intended query. If industry codes are too narrow, for example, a industry code for all merchants in a region, a large number of entries will need to be made for each Seller Supporting Node (SSN). It is recommended to collaborate with a core team member in deciding industry codes to ensure relevance, performance, and costs are balanced.'
+      type: object
+      properties:
+        name:
+          description: Name of the provider type
+          type: string
+        code:
+          description: A code for the provider type
+          type: string
+          enum:
+            - MERCHANT
+            - COURIER
+    Node:
+      title: Network Node Operator
+      description: Represents a node providing services to the network as defined in the registry.
+      type: object
+      properties:
+        node_id:
+          description: A universally unique identifier of the node.
+          type: string
+        uri:
+          description: The callback URI of the Node.
+          $ref: '#/components/schemas/Url'
+        role:
+          $ref: '#/components/schemas/NetworkRole'
+        public_key:
+          description: The encryption public key of the buyer supporting node as defined in the registry
+          type: string
+        provider_type:
+          description: The network defined domain that this node provides its products or services in. A single node can operate in multiple industries.
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ProviderType'
+        serviceable_region:
+          type: array
+          minItems: 3
+          items:
+            $ref: '#/components/schemas/Coordinates'
+    Context:
+      title: Context
+      description: 'This object must be passed in every interaction between a Seller Supporting Node (SSN) and a Buyer Supporting Node (BSN). Provides an overview to a receiving node with information about the intended transaction. Typically, a Buyer Supporting Node (BSN) sets the context based on the consumers location and search. Context includes - <ol><li>Demographic information like `industry` and `location`.</li><li>Communication details like the sending and receiving Node ID''s and API URL.</li><li>Interoperability information like the protocol version</li><li>Transaction details like the receiving Nodes call method, the transaction_id of a Buyer Supporting Node (BSN) session, a `time to live`, and a `timestamp`</li></ol>'
+      type: object
+      properties:
+        node_id:
+          description: Node ID of the requesting node
+          type: string
+        node_uri:
+          description: Node Host URI of the requesting node
+          type: string
+          format: uri
+        timestamp:
+          type: integer
+          format: int64
+          description: Unix timestamp in seconds
+        requester_public_key:
+          description: The encryption public key of the requesting node as defined in the registry.
+          $ref: '#/components/schemas/Node/properties/public_key'
+    NetworkRole:
+      title: Network Role
+      description: The role of node in the network
+      type: string
+      enum:
+        - BSN
+        - SSN
+    Money:
+      title: Money
+      description: An affiliated price of a <code>CatalogItem</code>
+      type: object
+      properties:
+        amount:
+          description: 'The amount of money, in the smallest denomination of the currency indicated by currency. For example, when currency is USD, amount is in cents. Monetary amounts can be positive or negative. See the specific field description to determine the meaning of the sign in a particular case.'
+          type: integer
+          format: int64
+        currency_code:
+          $ref: '#/components/schemas/CurrencyCode'
+    Location:
+      title: Location
+      description: provides details about the physical location affiliated with a seller or service provider
+      type: object
+      properties:
+        addressLine1:
+          description: 'Fields that start with address_line provide the address''s most specific details, like street number, street name, and building name. They do not provide less specific details like city, state/province, or country (these details are provided in other fields).'
+          type: string
+        addressLine2:
+          description: 'The second line of the address, if any.'
+          type: string
+        locality:
+          description: The city or town of the address
+          type: string
+        sublocality:
+          description: 'A civil region within the address''s locality, if any.'
+          type: string
+        sublocality2:
+          description: 'A civil region within the address''s sublocality, if any.'
+          type: string
+        sublocality3:
+          description: 'A civil region within the address''s sublocality2, if any.'
+          type: string
+        administrativeDistrictLevel1:
+          description: 'A civil entity within the address''s country. In the US, this is the state.'
+          type: string
+        administrativeDistrictLevel2:
+          description: 'A civil entity within the address''s administrative_district_level_1. In the US, this is the county.'
+          type: string
+        administrativeDistrictLevel3:
+          description: 'A civil entity within the address''s administrative_district_level_2, if any.'
+          type: string
+        postalCode:
+          description: The address's postal code. For a full list of field meanings by country.
+          type: string
+        countryCode:
+          $ref: '#/components/schemas/CountryCode'
+        firstName:
+          description: Optional first name when it's representing recipient.
+          type: string
+        lastName:
+          description: Optional last name when it's representing recipient.
+          type: string
+    MerchantCategoryCode:
+      title: Merchant Category Code
+      description: 'A four-digit number that describes the kind of goods or services sold at the location. The [merchant category code (MCC)](https://www.iso.org/standard/33365.html) of the merchant is standardized by ISO 18245. For example, 5045, for a location that sells computer goods and software. <ul> <li>[USDA MCC directory](https://www.dm.usda.gov/procurement/card/card_x/mcc.pdf)</li> <li>[Visa Merchant Data Standards Manual](https://usa.visa.com/content/dam/VCOM/download/merchants/visa-merchant-data-standards-manual.pdf)</li> <li>[Citibank MCC list](https://www.citibank.com/tts/solutions/commercial-cards/assets/docs/govt/Merchant-Category-Codes.pdf)</li> </ul>'
+      type: string
+      minLength: 4
+      maxLength: 4
+    LanguageCode:
+      title: Language Code
+      type: string
+      description: 'The code indicating the language preferences of the merchant, in [BCP 47 format](https://tools.ietf.org/html/bcp47#appendix-A). For example, en-US or fr-CA.'
+      enum:
+        - en-US
+    CurrencyCode:
+      title: Currency Code
+      type: string
+      description: 'The currency associated with the merchant, in [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) format. For example, the currency code for US dollars is USD.'
+      enum:
+        - USD
+    CountryCode:
+      title: Country Code
+      type: string
+      description: 'The country code associated with the merchant, in the two-letter format of [ISO 3166](https://www.iso.org/iso-3166-country-codes.html). For example, US or JP.'
+      enum:
+        - US
+    Coordinates:
+      description: Defines a latitudinal and longitudinal point in space
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+          description: The latitude coordinate.
+        longitude:
+          type: number
+          format: double
+          description: The longitude coordinate
+    CellPhone:
+      title: Cell Phone
+      description: 'an object representing an [E.164](https://en.wikipedia.org/wiki/E.164) formatted cell phone number'
+      properties:
+        country_phone_code:
+          description: 'The country phone code in E.164 format (e.g., +1 for the United States).'
+          type: string
+          pattern: ^\+\d+$
+        cell_phone_number:
+          description: The local cell phone number.
+          type: string
+          pattern: ^\d+$
+        extension:
+          description: An optional extension or additional digits (if applicable).
+          type: string
+          pattern: ^\d*$
+      required:
+        - countryCode
+        - nationalNumber
+      additionalProperties: false
+    Terms:
+      title: Terms
+      description: Transactional terms as defined by the Seller Supporting Node (SSN)
+      type: object
+      properties:
+        payment_term:
+          $ref: '#/components/schemas/PaymentTerm'
+        expiration_date:
+          type: integer
+          format: int64
+          minimum: -1
+          description: Unix timestamp in seconds representing when the terms expire. A value of -1 suggests that this response is not cacheable and should only be used once.
+      required:
+        - payment_term
+        - expiration_date
+    Pagination:
+      title: Pagination
+      description: pagination response used to reduce server load in queries to Seller Supporting Nodes
+      type: object
+      properties:
+        total:
+          type: integer
+        lastPage:
+          type: integer
+        currentPage:
+          type: integer
+        perPage:
+          type: integer
+        prevPage:
+          type: integer
+          nullable: true
+        nextPage:
+          type: integer
+          nullable: true
+      required:
+        - total
+        - lastPage
+        - currentPage
+        - perPage
+    Error:
+      title: Error
+      type: object
+      required:
+        - message
+      properties:
+        display_message:
+          description: A human readable error message
+          type: string
+        error_code:
+          description: A specific error code
+          type: string
+          enum:
+            - INTERNAL_SERVER_ERROR
+            - UNAUTHORIZED
+            - CERTIFICATE_EXPIRED
+            - FORBIDDEN
+            - BAD_REQUEST
+            - INCORRECT_TYPE
+            - INVALID_PAGINATION_ARGUMENTS
+            - MISSING_REQUIRED_PARAMETER
+            - UNKNOWN_QUERY_PARAMETER
+            - VALUE_REGEX_MISMATCH
+            - VALUE_TOO_SHORT
+            - VALUE_TOO_LONG
+            - VALUE_TOO_LOW
+            - VALUE_TOO_HIGH
+            - VALUE_EMPTY
+            - INVALID_CONTENT_TYPE
+            - BLOCKED_BY_SERVER
+        field:
+          description: The name of the field provided in the original request (if any) that the error pertains to.
+          type: string
+    PaymentTerm:
+      title: Payment Term
+      description: Defines payment settlement term between the Buyer Supporting Node (BSN) and the Seller Supporting Node (SSN)
+      type: object
+      properties:
+        id:
+          description: Identifier of the payment term. This id should be created by the BSN on the initial request and stored by both parties
+          type: string
+        collected_by:
+          description: 'This field indicates who is the collector of the payment. The BSN can set this value to ''BSN'' if it wants to collect the payment first and settle it to the SSN. Alternatively, the SSN can set this field with the value ''SSN'' if it wants the payment to be made directly.'
+          type: string
+          enum:
+            - BSN
+            - SSN
+    FulfillmentTerm:
+      title: Fulfillment Term
+      description: Defines
+      type: object
+      properties:
+        id:
+          description: an identifier
+          type: string
+    RefundTerm:
+      title: Refund Term
+      description: Defines
+      type: object
+      properties:
+        id:
+          description: an identifier
+          type: string
+    CancelationTerm:
+      title: Cancelation Term
+      description: Defines
+      type: object
+      properties:
+        id:
+          description: an identifier
+          type: string
+    EthereumAddress:
+      title: Ethereum Address
+      type: string
+      description: Ethereum address
+      pattern: '^0x[0-9a-fA-F]{40}$'
+    Url:
+      title: URL
+      description: Represents an RFC 3986-compliant URI string.
+      type: string
+      pattern: '^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$'
+    ImageFile:
+      title: Media Image
+      description: Defines an image that can be affiliated with an entity or object
+      type: object
+      properties:
+        image_url:
+          $ref: '#/components/schemas/Url'
+    Merchant:
+      title: Merchant
+      type: object
+      description: Defines details about a merchant and specifies information that a Buyer Supporting Node (BSN) can display to it's users.
+      properties:
+        id:
+          type: string
+          description: A globally unique ID of the merchant in the Seller Supporting Node's (SSN) system
+        slug:
+          type: string
+          description: 'A globally unique, human readable identifier of the merchant. (useful for displaying in urls)'
+        merchant_category_code:
+          $ref: '#/components/schemas/MerchantCategoryCode'
+        name:
+          type: string
+          description: The public facing display name of the merchant.
+          maxLength: 100
+        merchant_group_id:
+          description: The ID of the Merchant Group that owns this Merchant
+        location:
+          $ref: '#/components/schemas/Location'
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+        logo:
+          description: A user facing logo for the merchant.
+          $ref: '#/components/schemas/ImageFile'
+        description:
+          type: string
+          description: A public facing description of the business to display to the buyer.
+          maxLength: 1024
+        country_code:
+          $ref: '#/components/schemas/CountryCode'
+        language_code:
+          $ref: '#/components/schemas/LanguageCode'
+        currency_code:
+          $ref: '#/components/schemas/CurrencyCode'
+        status:
+          type: string
+          description: The merchant's status
+          enum:
+            - ACTIVE
+            - INACTIVE
+        operational_status:
+          description: Defines the operational state of a business at the time of the request and is calculated by the SSN as a reference to the composite of Menu Schedules
+          type: string
+          enum:
+            - OPEN
+            - CLOSED
+            - CLOSING_SOON
+        cell_phone_number:
+          description: A publicly listed cell phone number for the merchant.
+          $ref: '#/components/schemas/CellPhone'
+      required:
+        - id
+        - name
+        - slug
+        - merchant_category_code
+        - merchant_name
+        - marchant_logo
+        - description
+        - country
+        - language_code
+        - currency_code
+        - status
+        - operational_status
+    MerchantGroup:
+      title: Merchant Group
+      type: object
+      description: Defines an entity that contains a group of Merchants
+      properties:
+        id:
+          type: string
+          description: The unique ID of the merchant in the Seller Supporting Node's (SSN) system
+        ethereum_address:
+          $ref: '#/components/schemas/EthereumAddress'
+        business_name:
+          type: string
+          description: The overall name of the merchant groups business. (e.g. Wing Castle LLC.)
+        description:
+          type: string
+          description: A description of the merchant group and the type of services or products they offer to the network.
+        country_code:
+          $ref: '#/components/schemas/CountryCode'
+        language_code:
+          $ref: '#/components/schemas/LanguageCode'
+        currency_code:
+          $ref: '#/components/schemas/CurrencyCode'
+        status:
+          type: string
+          description: The merchant groups status
+          enum:
+            - ACTIVE
+            - INACTIVE
+    CatalogItemModifier:
+      title: Catalog Item Modifier
+      description: An item in the catalog of a <code>Merchant</code>
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this <code>CatalogItemModifier</code>
+          type: string
+        name:
+          description: The item's name. This is a searchable attribute for use in applicable query filters.
+          type: string
+          maxLength: 512
+          minLength: 1
+        description:
+          description: The item's description. This is a searchable attribute for use in applicable query filters.
+          type: string
+          maxLength: 4096
+        product_type:
+          $ref: '#/components/schemas/CatalogItemType'
+        product_price:
+          $ref: '#/components/schemas/Money'
+        minimum_selection_requirement:
+          description: The minimum number of selections to avail the <code>Modifier</code>
+          type: integer
+          default: 1
+          format: int32
+        maximum_selection_requirement:
+          description: The minimum number of selections to avail this <code>Modifier</code>
+          type: integer
+          default: 1
+          format: int32
+        ordinal:
+          description: Determines where this <code>CatalogModifierItem></code> appears in the <code>CatalogModifierGroup</code>
+          type: integer
+          format: int32
+        inventory_status:
+          description: Represents whether this item is currently for sale. <code>Low Quanttiy</code> is calculated and defined by the <code>Seller Supporting Node (SSN)</code>.
+          type: object
+          enum:
+            - FOR_SALE
+            - NOT_FOR_SALE
+            - LOW_QUANTITY
+        supported_fulfillment_modes:
+          type: array
+          items: null
+          $ref: '#/components/schemas/FulfillmentMode'
+        contains_alcohol:
+          description: A boolean representing whether or not this item contains alcohol. Important for tax and legal considerations.
+          type: boolean
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageFile'
+        featured_image:
+          description: 'Functionally equivalent to <code>images(first:1)</code>'
+          $ref: '#/components/schemas/ImageFile'
+        modifier_group_ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/CatalogModifierGroup/properties/id'
+    CatalogItemPriceType:
+      title: Price Type
+      description: Indicates whether an item has a fixed or variable price. <code>FIXED</code> represents a pre-calculated price. <code>VARIABLE_PRICE</code> represents a price that is calculated at the point of sale.
+      type: string
+      enum:
+        - FIXED
+        - VARIABLE_PRICE
+    CatalogModifierGroup:
+      title: Catalog Modifier Group
+      description: A modifier group that contains <code>Modifier</code>'s' to handle specifications related to <code>CatalogItem</code>'s.
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this <code>CatalogModifierGroup</code>
+          type: string
+        name:
+          description: The modifier group name.
+          type: string
+          maxLength: 255
+        description:
+          description: The description for the modifier group.
+          type: string
+          maxLength: 4096
+        minimum_selection_requirement:
+          description: The minimum number of <CatalogItemModifier>'s selections to satisfy
+          type: integer
+          default: 1
+          format: int32
+        maximum_selection_requirement:
+          description: The minimum number of <CatalogItemModifier>'s selections to satisfy
+          type: integer
+          default: 1
+          format: int32
+        images:
+          description: A collection of image files related to the modifier group.
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageFile'
+        modifier_item_ids:
+          description: A list of <code>CatalogItemModifier</code>'s affiliated with this modifier group.
+          type: array
+          items:
+            $ref: '#/components/schemas/CatalogItemModifier/properties/id'
+    CatalogCategory:
+      title: Catalog Category
+      description: A category to which a <code>CatalogItem</code> instance belongs. Used to group items for ease in exlporations.
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this <code>CatalogCategory</code>
+          type: string
+        name:
+          description: 'The category name. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.'
+          type: string
+          maxLength: 255
+        description:
+          description: The category description.
+          type: string
+          maxLength: 4096
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageFile'
+        item_ids:
+          description: A list of <code>CatalogItem</code>'s affiliated with this category
+          type: array
+          items:
+            $ref: '#/components/schemas/CatalogItem/properties/id'
+    Schedule:
+      title: Schedule
+      description: Defines a range of date times in local time for a specific day when products or services are available to purchase
+      type: object
+      properties:
+        day:
+          type: string
+          enum:
+            - MONDAY
+            - TUESDAY
+            - WEDNESDAY
+            - THURSDAY
+            - FRIDAY
+            - SATURDAY
+            - SUNDAY
+        available_hours:
+          description: Defines an array of time intervals defining availability of products or services within a menu
+          type: array
+          items:
+            type: object
+            description: Defines a range of intervals defining the time of day
+            properties:
+              from_hour:
+                description: Beginning hour interval in local time.
+                type: integer
+                format: int32
+                minimum: 0
+                maximum: 23
+              to_hour:
+                description: Ending hour interval in local time.
+                type: integer
+                format: int32
+                minimum: 0
+                maximum: 23
+              from_minute:
+                description: Beginning minute interval in local time.
+                type: integer
+                format: int32
+                minimum: 0
+                maximum: 59
+              to_minute:
+                description: Ending minute interval in local time.
+                type: integer
+                format: int32
+                minimum: 0
+                maximum: 59
+    CatalogItem:
+      title: Catalog Item
+      description: An item in the catalog of a <code>Merchant</code>
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this <code>CatalogItem</code>
+          type: string
+        name:
+          description: The item's name. This is a searchable attribute for use in applicable query filters.
+          type: string
+          maxLength: 512
+          minLength: 1
+        description:
+          description: The item's description. This is a searchable attribute for use in applicable query filters.
+          type: string
+          maxLength: 4096
+        product_type:
+          $ref: '#/components/schemas/CatalogItemType'
+        product_price:
+          $ref: '#/components/schemas/Money'
+        ordinal:
+          description: Determines where this <code>CatalogItem></code> appears in the <code>CatalogCategory</code>
+          type: integer
+          format: int32
+        inventory_status:
+          description: Represents whether this item is currently for sale. <code>Low Quanttiy</code> is calculated and defined by the <code>Seller Supporting Node (SSN)</code>.
+          type: object
+          enum:
+            - FOR_SALE
+            - NOT_FOR_SALE
+            - LOW_QUANTITY
+        supported_fulfillment_modes:
+          type: array
+          items: null
+          $ref: '#/components/schemas/FulfillmentMode'
+        contains_alcohol:
+          description: A boolean representing whether or not this item contains alcohol. Important for tax and legal considerations.
+          type: boolean
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageFile'
+        featured_image:
+          description: 'Functionally equivalent to <code>images(first:1)</code>'
+          $ref: '#/components/schemas/ImageFile'
+        modifier_group_ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/CatalogModifierGroup/properties/id'
+    CatalogItemType:
+      title: Catalog Item Type
+      description: The available <code>CatalogItem</code> types. Defined by global network policies.
+      type: string
+      enum:
+        - ALCOHOL
+        - FOOD
+        - REGULAR
+        - SCHEDULED_SERVICE (e.g. a lawn service or delivery service)
+        - ON_DEMAND_SERVICE (e.g. on-demand delivery)
+    Catalog:
+      title: Catalog
+      description: Defines a specific collection of <code>CatalogItem</code>'s available for purchase
+      type: object
+      properties:
+        name:
+          description: Provides context to the buyer about the catalog and it's contents. (e.g. Lunch Menu)
+          type: string
+        description:
+          description: Provides additional context to the buyer about the catalog  and it's contents
+          type: string
+        schedules:
+          description: Defines the availability of the items within this catalog
+          type: array
+          items:
+            $ref: '#/components/schemas/Schedule'
+        category_ids:
+          description: 'Defines different collections of items within this catalog. Used to breakup items into useful categories (e.g. Appetizers, Desserts, etc.)'
+          type: array
+          items:
+            $ref: '#/components/schemas/CatalogCategory/properties/id'
+      required:
+        - name
+        - schedules
+        - category_ids

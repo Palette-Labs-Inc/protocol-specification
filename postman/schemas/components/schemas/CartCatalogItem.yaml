@@ -1,0 +1,34 @@
+title: A CatalogItem in the Cart
+description: An single <CatalogItem> reference with a quantity and the <code>Buyer</code>s <code>CatalogItemModifier</code> selections.
+type: object
+properties:
+  id: 
+    description: The identifier of the <code>CatalogItem</code> for this specific customer in their <code>Cart</code>
+    type: string
+  catalog_item_id:
+        description: The identifier of the <code>CatalogItem</code> from the <code>Catalog</code> in the <code>SSN</code> server
+        $ref: '#/components/schemas/CatalogItemId'
+  quantity: 
+    type: integer
+    format: int32
+  catalog_item_modifiers: 
+    type: array
+    items:
+      $ref: '#/components/schemas/CatalogItemModifier'
+  note: 
+    description: represents a specific, item level note. Typically used by a Merchant to fulfill a specific request form the Customer that is not satisified within the core Catalog specificaiton.
+    type: string
+  product_price:
+      $ref: '#/components/schemas/Money'
+  images: 
+      type: array
+      items: 
+          $ref: '#/components/schemas/ImageFile'
+  featured_image: 
+      description: Functionally equivalent to <code>images(first:1)</code>
+      $ref: '#/components/schemas/ImageFile'
+required:
+  - id
+  - item_id
+  - quantity
+  - price

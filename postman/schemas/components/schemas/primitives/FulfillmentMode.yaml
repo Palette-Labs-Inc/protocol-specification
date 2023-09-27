@@ -1,0 +1,8 @@
+title: Fulfillment Mode
+description: Defines a method for acquiring a product or service
+type: string
+enum:
+  - PICKUP  # Represents the option for the buyer to pick up the product.
+  - SHIPMENT  # Represents the option for shipping the product to the buyer across long distances.
+  - DELIVERY  # Represents the option for delivering the product to the buyer in a local context. This option will require a second search intent for a dispatch service.
+  - APPOINTMENT # Represents the option for an appointment based service.

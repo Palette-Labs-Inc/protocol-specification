@@ -1,0 +1,21 @@
+content:
+  application/json:
+    schema:
+      description: A buyers intent to avail specific products or services from a merchant catalog
+      type: object
+      properties:
+        item_search_string:
+          description: A raw free text search string describing the name or description of a <code>CatalogItem</code>
+          type: string
+        item_price_types: 
+          description: An array of item price types to be returned in the Catalog. If left blank, it is assumed that the buyer intends to view <code>CatalogItem</code>'s for all possible price types.
+          type: array
+          items:
+            $ref: '#/components/schemas/CatalogItemPriceType'
+        fulfillment_modes:
+          type: array
+          items:
+            $ref: '#/components/schemas/FulfillmentMode'
+        include_modifiers:
+          default: false
+          description: A boolean value indicating whether modifer groups and modifier items should be returned. 

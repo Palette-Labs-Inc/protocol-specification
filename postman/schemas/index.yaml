@@ -1,0 +1,80 @@
+openapi: '3.0.0'
+info:
+  title: The Universal Transaction Protocol (UTP)
+  description: transaction lifecycle specification
+  version: 0.0.0
+  contact:
+    email: engineering@noshdelivery.io
+security:
+  - NodeAuth: []
+paths:
+  /merchant:
+    post:
+      $ref: './paths/merchant/GetMerchants.yaml'
+  /merchant/{merchant_id}:
+    parameters:
+      - $ref: '#/components/parameters/MerchantIdPathParam'
+    get:
+      $ref: './paths/merchant/GetMerchant.yaml'
+  /catalog/{merchant_id}/search:
+    parameters:
+      - $ref: '#/components/parameters/MerchantIdPathParam'
+    post:
+      $ref: './paths/merchant/GetMerchantCatalog.yaml'
+  /item/{item_id}:
+    parameters:
+      - $ref: '#/components/parameters/CatalogItemIdPathParam'
+    get:
+      $ref: './paths/cart/GetItem.yaml'
+  /item/{item_id}/modifiers:
+    parameters:
+      - $ref: '#/components/parameters/CatalogItemIdPathParam'
+    get:
+      $ref: './paths/merchant/GetItemModifiers.yaml'
+  /cart:
+    post:
+      $ref: './paths/cart/CreateCart.yaml'
+  /cart/{cart_id}:
+    parameters:
+      - $ref: '#/components/parameters/CartIdPathParam'
+    get:
+      $ref: './paths/cart/GetCart.yaml'
+    put:
+      $ref: './paths/cart/UpdateCart.yaml'
+    delete:
+      $ref: './paths/cart/DeleteCart.yaml'
+  /cart/{cart_id}/items:
+    parameters:
+      - $ref: '#/components/parameters/CartIdPathParam'
+    post:
+      $ref: './paths/cart/AddCartItem.yaml'
+  /cart/{cart_id}/items/{item_id}:
+    parameters:
+        - $ref: '#/components/parameters/CartIdPathParam'
+        - $ref: '#/components/parameters/CatalogItemIdPathParam'
+    put: 
+      $ref: './paths/cart/UpdateCartItem.yaml'
+    delete:
+       $ref: './paths/cart/DeleteCartItem.yaml'
+  /payment_sheet:
+    post: 
+      $ref: './paths/payment/CreatePaymentIntent.yaml'
+  /delivery_quote:
+    post:
+      $ref: './paths/delivery/CreateDeliveryQuote.yaml'
+  /delivery:
+    post:
+      $ref: './paths/delivery/CreateDelivery.yaml'
+components:
+  securitySchemes:
+    $ref: './components/securitySchemes.yaml'
+  schemas:
+    $ref: './components/schemas.yaml'
+  parameters: 
+    $ref: './components/parameters.yaml'
+  requestBodies: 
+    $ref: './components/requestBodies.yaml'
+  responses: 
+    $ref: './components/responses.yaml'
+  headers:
+    $ref: './components/headers.yaml'

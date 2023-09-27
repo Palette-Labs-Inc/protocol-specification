@@ -1,0 +1,19 @@
+title: Fee Component
+description: The charges affiliated with a delivery
+type: object
+properties:
+    charge_type:
+      description: Name of the fee component.
+      type: string
+      enum:
+        - DISTANCE_FEE
+        - ORDER_VALUE_FEE
+        - SERVICE_FEE
+        - SUBSIDY_FEE
+        - OTHER_FEE
+        - REGULATORY_FEE
+        - PROMOTIONAL_FEE
+        - SMALL_ORDER_FEE
+        - FLAT_FEE
+    amount: 
+      $ref: '#/components/schemas/Money'

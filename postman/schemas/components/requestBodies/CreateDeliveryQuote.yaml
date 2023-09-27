@@ -1,0 +1,31 @@
+content:
+  application/json:
+    schema:
+      description: Represents the action of a <code>Buyer</code> to get a delivery quote between two addresses
+      type: object
+      properties:
+        pickup_address:
+          description: The location that the delivery needs to be picked up from.
+          $ref: '#/components/schemas/DeliveryWaypoint'
+        delivery_address:
+          description: The location that the delivery needs to be dropped off at.
+          $ref: '#/components/schemas/DeliveryWaypoint'
+        delivery_time:
+          type: integer
+          format: int64
+          description: Unix timestamp representing the requested delivery time in local time.
+        pickup_time:
+          type: integer
+          format: int64
+          description: Unix timestamp representing the requested pickup time in local time.
+        total_objects_value:
+          description: Total price of combined items in the lowest unit of the local currency. (e.g. cents)
+          $ref: '#/components/schemas/Money'
+        delivery_deadline_time:
+            type: integer
+            format: int64
+            description: Unix timestamp representing when the order must be delivered in local time.
+        pickup_deadline_time:
+          type: integer
+          format: int64
+          description: Unix timestamp representing when the order must be picked up in local time.  

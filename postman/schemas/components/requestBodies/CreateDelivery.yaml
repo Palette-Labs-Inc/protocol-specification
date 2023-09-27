@@ -1,0 +1,76 @@
+content:
+  application/json:
+    schema:
+      description: Creates a delivery between two addresses 
+      type: object
+      properties:
+        fulfillment_terms_id:
+          type: string
+          description: The Id from the <code>FulfillmentTerm</code> in the response to the 
+        pickup_name:
+          description: A human-readable designation of the location where the courier will make the pickup. (e.g. a Restaurant name) 
+          type: string
+        dropoff_name:
+          description: A human-readable designation of the location where the courier will make the dropoff. (e.g. A person or businesses name) 
+          type: string
+        pickup_address:
+          description: The location that the delivery needs to be picked up from.
+          $ref: '#/components/schemas/DeliveryWaypoint'
+        delivery_address:
+          description: The location that the delivery needs to be dropped off at.
+          $ref: '#/components/schemas/DeliveryWaypoint'
+        delivery_time:
+            type: integer
+            format: int64
+            description: Unix timestamp representing the requested delivery time in local time.
+        pickup_time:
+          type: integer
+          format: int64
+          description: Unix timestamp representing the requested pickup time in local time.
+        pickup_phone_number:
+          description: A publicly listed cell phone number for the pickup.
+          $ref: '#/components/schemas/CellPhone'
+        dropoff_phone_number:
+          description: A publicly listed cell phone number for the dropoff.
+          $ref: '#/components/schemas/CellPhone'
+        delivery_items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/DeliveryItem'
+        idempotency_key: 
+          description: A key which is used to avoid duplicate order creation with identical idempotency keys for the same account. The key persists for a set time frame, defaulting to 6 hours.
+          type: string
+        courier_tip:
+          description: Amount in the local currencies lowest denomination (e.g. cents) to be paid to the driver in tips.
+          $ref: '#/components/schemas/Money'
+        multiple_people_required:
+          description: Defines whether the particular order requires more than a single individual to complete the task.
+          type: boolean
+        pickup_notes: 
+          type: string
+          description: Additional instructions for the courier at the pickup location. Max 280 characters.
+          maxLength: 280
+        dropoff_notes: 
+          type: string
+          description: Additional instructions for the courier at the dropoff location. Max 280 characters.
+          maxLength: 280
+        delivery_deadline_time:
+            type: integer
+            format: int64
+            description: Unix timestamp representing when the order must be delivered in local time.
+        pickup_deadline_time:
+          type: integer
+          format: int64
+          description: Unix timestamp representing when the order must be picked up in local time.  
+        manifest_total_value: 
+          description: Total price of combined items in the lowest unit of the local currency. (e.g. cents)
+          $ref: '#/components/schemas/Money'
+        undeliverable_action: 
+          description: Defines the action of a courier when a delivery cannot be successfully dropped off.
+          type: string
+          enum: 
+            - LEAVE_AT_DOOR
+            - RETURN
+            - DISCARD
+        

@@ -1,0 +1,19 @@
+title: Cart Fee
+type: object
+description: The costs that a <code>Buyer</code> will pay at checkout.
+properties:
+  title:
+    description: A human-readable title for the fee. Useful to display in a Receipt or similar interface on a mobile or web client.
+    type: string 
+  description:
+    description: A human-readable description of the fee associated with this <code>CartFee</code>
+    type: string
+  amount:
+    description: The chargeable amount of this <code>CartFee</code>
+    type: string
+  currency_code:
+    $ref: '#/components/schemas/CurrencyCode'
+required:
+  - title
+  - description
+  - amount

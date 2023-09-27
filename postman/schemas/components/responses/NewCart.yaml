@@ -1,0 +1,10 @@
+description: The new cart and terms
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        cart:
+          $ref: '#/components/schemas/Cart'
+        terms: 
+          $ref: '#/components/schemas/Terms'

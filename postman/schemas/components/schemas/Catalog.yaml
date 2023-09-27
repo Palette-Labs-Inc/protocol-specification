@@ -1,0 +1,24 @@
+title: Catalog
+description: Defines a specific collection of <code>CatalogItem</code>'s available for purchase
+type: object
+properties: 
+    name: 
+        description: Provides context to the buyer about the catalog and it's contents. (e.g. Lunch Menu)
+        type: string
+    description:
+        description: Provides additional context to the buyer about the catalog  and it's contents
+        type: string
+    schedules:
+        description: Defines the availability of the items within this catalog
+        type: array
+        items: 
+            $ref: '#/components/schemas/Schedule'
+    category_ids:
+        description: Defines different collections of items within this catalog. Used to breakup items into useful categories (e.g. Appetizers, Desserts, etc.)
+        type: array
+        items:
+            $ref: "#/components/schemas/CatalogCategoryId"
+required:
+    - name
+    - schedules
+    - category_ids

@@ -1,0 +1,14 @@
+title: Delivery Item
+description: Represents a single item that is meant to travel with a courier during a delivery
+type: object
+properties:
+    name: 
+        type: string
+        description: A description of an item.
+    quantity: 
+        description: The number of items.
+        minimum: 1
+        type: integer
+        format: int32
+    physical_attributes:
+        $ref: '#/components/schemas/PhysicalAttributes'

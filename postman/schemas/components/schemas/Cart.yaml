@@ -1,0 +1,25 @@
+title: Cart
+type: object
+description: A <code>Cart</code> represents the <code>CatalogItem</code>s that a <code>Buyer</code> intends to purchase, and the estimated costs associated with the <code>Cart</code>. 
+properties:
+  id:
+    type: string
+    description: A globally unique ID of the <code>Cart</code>
+  cost:
+    description: The costs that the buyer will pay at checkout. The costs can be estimates and are subject to change. Changes will be reflected at checkout.
+    $ref: '#/components/schemas/CartCost'  
+  catalog_items:
+    description: An array of currently selected <code>CatalogItem</code>s in this cart.
+    type: array
+    items:
+      $ref: '#/components/schemas/CartCatalogItem'
+  fulfillment_details:
+    $ref: '#/components/schemas/CartFulfillment'
+  note: 
+    description: A note that's associated with the cart. For example, a note for a merchant from a buyer about a specific request with their order.
+    type: string
+required:
+  - id
+  - cost
+  - catalog_items
+  - fulfillment_details

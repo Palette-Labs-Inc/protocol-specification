@@ -1,0 +1,26 @@
+summary: update cart
+tags:
+  - Seller Supporting Node (SSN)
+description: update fulfillment mode, note, or other property
+requestBody:
+  description: Represents the action of a <code>Buyer</code> to update fulfillment specifications such as time, mode, and location.
+  required: true
+  $ref: '#/components/requestBodies/UpdateCart'
+responses:
+  '200':
+    $ref: '#/components/responses/NewCart'
+    headers:
+      X-Stamp: 
+        $ref: '#/components/headers/X-Stamp'
+  404:
+    description: No data found for the provided value
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error'
+  500:
+    description: Unexpected error
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error'

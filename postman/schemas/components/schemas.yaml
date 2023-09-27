@@ -1,0 +1,181 @@
+# primitive types
+FulfillmentMode: 
+    $ref: './schemas/primitives/FulfillmentMode.yaml'
+
+FulfillmentStatus: 
+    $ref: './schemas/primitives/FulfillmentStatus.yaml'
+
+
+ProviderType: 
+    $ref: './schemas/primitives/ProviderType.yaml'
+
+Node: 
+    $ref: './schemas/primitives/Node.yaml'
+
+NetworkRole: 
+    $ref: './schemas/primitives/NetworkRole.yaml'
+
+Money: 
+    $ref: './schemas/primitives/Money.yaml'
+
+Fee: 
+    $ref: './schemas/primitives/Fee.yaml'
+
+Location: 
+    $ref: './schemas/primitives/Location.yaml'
+
+MerchantCategoryCode: 
+    $ref: './schemas/primitives/MerchantCategoryCode.yaml'
+
+LanguageCode: 
+    $ref: './schemas/primitives/LanguageCode.yaml'
+
+CurrencyCode: 
+    $ref: './schemas/primitives/CurrencyCode.yaml'
+
+CountryCode: 
+    $ref: './schemas/primitives/CountryCode.yaml'
+
+Coordinates: 
+    $ref: './schemas/primitives/Coordinates.yaml'
+
+CellPhone: 
+    $ref: './schemas/primitives/CellPhone.yaml'
+
+PaymentTerm: 
+    $ref: './schemas/primitives/PaymentTerm.yaml'
+
+RefundTerm: 
+    $ref: './schemas/primitives/RefundTerm.yaml'
+
+CancellationTerm: 
+    $ref: './schemas/primitives/CancellationTerm.yaml'
+
+Terms: 
+    $ref: './schemas/primitives/Terms.yaml'
+
+TermsId: 
+    $ref: './schemas/primitives/Terms.yaml#/properties/id'
+
+
+Pagination: 
+    $ref: './schemas/primitives/Pagination.yaml'
+
+Error: 
+    $ref: './schemas/primitives/Error.yaml'
+
+EthereumAddress:
+    $ref: './schemas/primitives/EthereumAddress.yaml'
+
+Url:
+    $ref: './schemas/primitives/Url.yaml'
+
+ImageFile:
+    $ref: './schemas/primitives/ImageFile.yaml'
+
+# merchant types
+Merchant:
+    $ref: './schemas/Merchant.yaml'
+
+## merchant identifiers
+MerchantId:
+    $ref: './schemas/Merchant.yaml#/properties/id'
+
+MerchantSlug:
+    $ref: './schemas/Merchant.yaml#/properties/slug'
+
+# catalog
+CatalogItemModifier: 
+    $ref: './schemas/CatalogItemModifier.yaml'
+
+CatalogItemPriceType: 
+    $ref: './schemas/CatalogItemPriceType.yaml'
+
+CatalogModifierGroup: 
+    $ref: './schemas/CatalogModifierGroup.yaml'
+
+CatalogCategory: 
+    $ref: './schemas/CatalogCategory.yaml'
+
+Schedule: 
+    $ref: './schemas/Schedule.yaml'
+
+CatalogItem: 
+    $ref: './schemas/CatalogItem.yaml'
+
+CatalogItemType: 
+    $ref: './schemas/CatalogItemType.yaml'
+
+Catalog: 
+    $ref: './schemas/Catalog.yaml'
+
+## catalog identifiers
+CatalogId:
+    $ref: './schemas/Catalog.yaml#/properties/id'
+
+CatalogCategoryId:
+    $ref: './schemas/CatalogCategory.yaml#/properties/id'
+
+CatalogItemId:
+    $ref: './schemas/CatalogItem.yaml#/properties/id'
+
+CatalogModifierGroupId:
+    $ref: './schemas/CatalogModifierGroup.yaml#/properties/id'
+
+CatalogItemModifierId:
+    $ref: './schemas/CatalogItemModifier.yaml#/properties/id'
+
+# cart
+Cart: 
+    $ref: './schemas/Cart.yaml'
+
+CartCatalogItemModifier:
+    $ref: './schemas/CartCatalogItemModifier.yaml'
+
+CartFulfillmentOption:
+    $ref: './schemas/CartFulfillmentOption.yaml'
+
+CartFulfillment:
+    $ref: './schemas/CartFulfillment.yaml'
+
+CartCatalogItem:
+    $ref: './schemas/CartCatalogItem.yaml'
+
+CartCost:
+    $ref: './schemas/CartCost.yaml'
+
+## cart identifiers
+CartId:
+    $ref: './schemas/Cart.yaml#/properties/id'
+
+CartCatalogItemModifierId:
+    $ref: './schemas/CartCatalogItemModifier.yaml#/properties/id'
+
+# customer
+Customer:
+    $ref: './schemas/Customer.yaml'
+
+CustomerLocation:
+    $ref: './schemas/CustomerLocation.yaml'
+
+## customer identifiers
+CustomerId:
+    $ref: './schemas/Customer.yaml#/properties/id'
+
+# delivery
+IdentityRequirement:
+    $ref: './schemas/IdentityRequirement.yaml'
+BarcodeRequirement:
+    $ref: './schemas/BarcodeRequirement.yaml'
+DeliverySignatureRequirement:
+    $ref: './schemas/DeliverySignatureRequirement.yaml'
+DeliveryVerification:
+    $ref: './schemas/DeliveryVerification.yaml'
+DeliveryItem:
+    $ref: './schemas/DeliveryItem.yaml'
+DeliveryQuote:
+    $ref: './schemas/DeliveryQuote.yaml'
+DeliveryFeeComponent:
+    $ref: './schemas/DeliveryFeeComponent.yaml'
+DeliveryWaypoint:
+    $ref: './schemas/DeliveryWaypoint.yaml'

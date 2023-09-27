@@ -1,0 +1,43 @@
+title: Cart Catalog Item Modifier
+type: object
+properties:
+    id: 
+        description: The identifier of the <code>CatalogItemModifier</code> for this specific customer in their <code>Cart</code>
+        type: string
+    modifier_item_id:
+        description: The identifier of the <code>CatalogItemModifier</code> from the <code>Catalog</code>
+        $ref: '#/components/schemas/CartCatalogItemModifierId'
+    quantity: 
+        type: integer
+        format: int32
+    description: 
+        description: The item's description. This is a searchable attribute for use in applicable query filters.
+        type: string
+        maxLength: 4096
+    physical_attributes:
+        $ref: '#/components/schemas/PhysicalAttributes'
+    product_price:
+        $ref: '#/components/schemas/Money'
+    minimum_selection_requirement: 
+        description: The minimum number of selections to avail the <code>Modifier</code>
+        type: integer
+        default: 1
+        format: int32
+    maximum_selection_requirement: 
+        description: The minimum number of selections to avail this <code>Modifier</code>
+        type: integer
+        default: 1
+        format: int32
+    images: 
+        type: array
+        items: 
+            $ref: '#/components/schemas/ImageFile'
+    featured_image: 
+        description: Functionally equivalent to <code>images(first:1)</code>
+        $ref: '#/components/schemas/ImageFile'
+required:
+    - id
+    - modifier_item_id
+    - quantity
+    - minimum_selection_requirement # required for ease of development via mobile clients
+    - maximum_selection_requirement # required for ease of development via mobile clients

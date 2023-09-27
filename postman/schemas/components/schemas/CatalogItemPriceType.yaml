@@ -1,0 +1,6 @@
+title: Price Type
+description: Indicates whether an item has a fixed or variable price. <code>FIXED</code> represents a pre-calculated price. <code>VARIABLE_PRICE</code> represents a price that is calculated at the point of sale.
+type: string
+enum:
+    - FIXED
+    - VARIABLE_PRICE

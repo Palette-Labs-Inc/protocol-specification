@@ -1,0 +1,13 @@
+title: Delivery Signature Requirement
+type: object
+description: Signature requirement spec to indicate that a signature must be collected at this waypoint.
+properties:
+    enabled: 
+        type: boolean
+        description: Flag for if a signature is required at this waypoint.
+    collect_signer_name: 
+        type: boolean
+        description: Flag for if the signer's name is required at this waypoint.
+    collect_signer_relationship: 
+        type: boolean
+        description: Flag for if the signer's relationship to the intended recipient is required at this waypoint.

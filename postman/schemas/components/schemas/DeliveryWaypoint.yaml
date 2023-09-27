@@ -1,0 +1,8 @@
+title: Waypoint
+description: A point in space. Defines a specific position in a couriers journey.
+type: object
+properties:
+  location: 
+    $ref: '#/components/schemas/Location'
+  coordinates: 
+    $ref: '#/components/schemas/Coordinates'

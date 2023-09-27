@@ -1,0 +1,46 @@
+description: Request body for finding nearby merchants
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        search_string:
+          description: A raw free text search string describing the name or description of a seller.
+          type: string
+        coordinates:
+          description: The location coordinates where the transaction is to be fulfilled. Typically, the location of the customer. Used by the Seller Supporting Node (SSN) to filter providers.
+          $ref: '#/components/schemas/Coordinates'
+        fulfillment_modes:
+          type: array
+          items:
+            $ref: '#/components/schemas/FulfillmentMode'
+        merchant_type:
+          description: Defines the buyer's intended merchant type(s).
+          type: array
+          items:
+            type: string
+          enum:
+            - FOOD 
+            - CONVENIENCE
+            - GROCEERY
+            - PETS
+            - FLOWERS
+            - PACKAGES
+            - ALCOHOL
+        cuisine_types:
+          description: Defines the cuisine type(s) when the merchant type is 'Food.'
+          type: array
+          items:
+            type: string
+          enum:
+            - MEXICAN
+            - SEAFOOD
+            - FRENCH
+            - THAI
+            - BURGERS
+            - INDIAN
+            - DRINKS
+            - AMERICAN
+            - CHINESE
+            - FAST_FOOD
+            - DESSERT

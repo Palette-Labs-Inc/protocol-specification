@@ -1,0 +1,23 @@
+title: Cart Cost
+type: object
+description: The costs that a <code>Buyer</code> will pay at checkout.
+properties:
+  subtotal_amount:
+    description: The amount, before taxes and cart-level discounts, for the customer to pay.
+    $ref: '#/components/schemas/Money'
+  total_amount:
+    description: Defines the total amount for the customer to pay.
+    $ref: '#/components/schemas/Money'
+  total_fees_amount:
+    description: Defines the total amount for the customer to pay.
+    $ref: '#/components/schemas/Money'
+  fees:
+    description: An array of fees associated with the <code>Cart</code>, the sum of <code>CartFee</code> amounts must equal the totalFeesAmount value. 
+    type: array
+    items:
+      $ref: '#/components/schemas/Fee'
+required:
+  - subtotal_amount
+  - total_amount
+  - total_fees_amount
+  - cart_fees

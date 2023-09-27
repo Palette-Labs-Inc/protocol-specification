@@ -1,0 +1,8 @@
+title: Customer Location
+description: Information about a customers location
+type: object
+properties:
+    location: 
+      $ref: '#/components/schemas/Location'
+    coordinates: 
+      $ref: '#/components/schemas/Coordinates'

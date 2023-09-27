@@ -1,0 +1,7 @@
+title: Payment Term
+description: Defines payment settlement term between the Buyer Supporting Node (BSN) and the Seller Supporting Node (SSN)
+type: object
+properties:
+    processed_at:
+        description: The state of an Order when the payment is officially processed.
+        $ref: "#/components/schemas/FulfillmentStatus"

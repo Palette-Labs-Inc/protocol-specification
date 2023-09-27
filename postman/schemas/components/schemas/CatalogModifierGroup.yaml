@@ -1,0 +1,35 @@
+title: Catalog Modifier Group
+description: A modifier group that contains <code>Modifier</code>'s' to handle specifications related to <code>CatalogItem</code>'s.
+type: object
+properties:
+    id: 
+        description: A unique identifier for this <code>CatalogModifierGroup</code>
+        type: string
+    name: 
+        description: The modifier group name.
+        type: string
+        maxLength: 255
+    description:
+        description: The description for the modifier group.
+        type: string
+        maxLength: 4096
+    minimum_selection_requirement: 
+        description: The minimum number of <CatalogItemModifier>'s selections to satisfy
+        type: integer
+        default: 1
+        format: int32
+    maximum_selection_requirement: 
+        description: The minimum number of <CatalogItemModifier>'s selections to satisfy
+        type: integer
+        default: 1
+        format: int32
+    images: 
+        description: A collection of image files related to the modifier group.
+        type: array
+        items: 
+            $ref: '#/components/schemas/ImageFile'
+    modifier_item_ids: 
+        description: A list of <code>CatalogItemModifier</code>'s affiliated with this modifier group. 
+        type: array
+        items:
+            $ref: '#/components/schemas/CatalogItemModifierId'

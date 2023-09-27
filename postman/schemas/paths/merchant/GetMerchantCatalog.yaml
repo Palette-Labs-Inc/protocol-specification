@@ -1,0 +1,24 @@
+summary: get merchant catalog
+tags:
+  - Seller Supporting Node (SSN)
+description: The <code>BSN</code> broadcasts the customer's request for a catalog offering specific products or services
+requestBody:
+  $ref: '#/components/requestBodies/GetMerchantCatalog'
+responses:
+  '200':
+    $ref: '#/components/responses/GetMerchantCatalog'
+    headers:
+      X-Stamp: 
+        $ref: '#/components/headers/X-Stamp'
+  404:
+    description: No data found for the provided value
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error'
+  500:
+    description: Unexpected error
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error'

@@ -1,0 +1,48 @@
+title: Catalog Item
+description: An item in the catalog of a <code>Merchant</code>
+type: object
+properties: 
+    id: 
+        description: A unique identifier for this <code>CatalogItem</code>
+        type: string
+    name: 
+        description: The item's name. This is a searchable attribute for use in applicable query filters.
+        type: string
+        maxLength: 512
+        minLength: 1
+    description: 
+        description: The item's description. This is a searchable attribute for use in applicable query filters.
+        type: string
+        maxLength: 4096
+    physical_attributes:
+        $ref: '#/components/schemas/PhysicalAttributes'
+    product_type:
+        $ref: '#/components/schemas/CatalogItemType'
+    product_price:
+        $ref: '#/components/schemas/Money'
+    ordinal: 
+        description: Determines where this <code>CatalogItem></code> appears in the <code>CatalogCategory</code>
+        type: integer
+        format: int32
+    inventory_status: 
+        description: Represents whether this item is currently for sale. <code>Low Quanttiy</code> is calculated and defined by the <code>Seller Supporting Node (SSN)</code>.
+        type: object
+        enum: 
+            - FOR_SALE
+            - NOT_FOR_SALE
+            - LOW_QUANTITY
+    supported_fulfillment_modes: 
+        type: array
+        items:
+        $ref: '#/components/schemas/FulfillmentMode'
+    images: 
+        type: array
+        items: 
+            $ref: '#/components/schemas/ImageFile'
+    featured_image: 
+        description: Functionally equivalent to <code>images(first:1)</code>
+        $ref: '#/components/schemas/ImageFile'
+    modifier_group_ids:
+        type: array
+        items:
+            $ref: '#/components/schemas/CatalogModifierGroupId'

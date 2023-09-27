@@ -1,0 +1,10 @@
+title: Money
+description: A price associated with a product, service, or fulfillment method, or other charge associated with a transaction
+type: object
+properties:
+    amount:
+        description: The amount of money, in the smallest denomination of the currency indicated by currency. For example, when currency is USD, amount is in cents. Monetary amounts can be positive or negative. See the specific field description to determine the meaning of the sign in a particular case.
+        type: integer
+        format: int64
+    currency_code:
+        $ref: '#/components/schemas/CurrencyCode'

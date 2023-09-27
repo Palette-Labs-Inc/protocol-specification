@@ -1,0 +1,10 @@
+description: A catalog of merchants represented by the <code>Seller Supporting Node (SSN)</code>
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                delivery_quote:
+                    $ref: '#/components/schemas/DeliveryQuote'
+                terms: 
+                    $ref: '#/components/schemas/Terms'

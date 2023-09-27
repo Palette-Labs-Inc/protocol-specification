@@ -1,0 +1,36 @@
+title: Location
+description: provides details about a physical location
+type: object
+properties: 
+  addressLine1:
+    description: Fields that start with address_line provide the address's most specific details, like street number, street name, and building name. They do not provide less specific details like city, state/province, or country (these details are provided in other fields).
+    type: string
+  addressLine2:
+    description: The second line of the address, if any.
+    type: string
+  locality:
+    description: The city or town of the address
+    type: string
+  sublocality:
+    description: A civil region within the address's locality, if any.
+    type: string
+  sublocality2:
+    description: A civil region within the address's sublocality, if any.
+    type: string 
+  sublocality3:
+    description: A civil region within the address's sublocality2, if any.
+    type: string
+  administrativeDistrictLevel1:
+    description: A civil entity within the address's country. In the US, this is the state.
+    type: string
+  administrativeDistrictLevel2:
+    description: A civil entity within the address's administrative_district_level_1. In the US, this is the county.
+    type: string
+  administrativeDistrictLevel3:
+    description: A civil entity within the address's administrative_district_level_2, if any.
+    type: string
+  postalCode:
+    description: The address's postal code. For a full list of field meanings by country.
+    type: string
+  countryCode:
+    $ref: '#/components/schemas/CountryCode'

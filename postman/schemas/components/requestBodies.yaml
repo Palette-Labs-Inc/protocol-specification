@@ -1,0 +1,30 @@
+# merchant
+GetMerchants:
+    $ref: './requestBodies/GetMerchants.yaml'
+
+GetMerchantCatalog:
+    $ref: './requestBodies/GetMerchantCatalog.yaml'
+
+# cart
+CreateCart:
+    $ref: './requestBodies/CreateCart.yaml'
+
+UpdateCart:
+    $ref: './requestBodies/UpdateCart.yaml'
+
+AddCartItem:
+    $ref: './requestBodies/AddCartItem.yaml'
+
+UpdateCartItem:
+    $ref: './requestBodies/UpdateCartItem.yaml'
+
+# payment
+CreatePaymentIntent: 
+    $ref: './requestBodies/CreatePaymentIntent.yaml'
+
+# delivery
+CreateDeliveryQuote:
+    $ref: './requestBodies/CreateDeliveryQuote.yaml'
+
+CreateDelivery:
+    $ref: './requestBodies/CreateDelivery.yaml'

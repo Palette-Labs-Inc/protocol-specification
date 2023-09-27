@@ -1,0 +1,12 @@
+title: Refund Term
+description: Defines the refund term of an order. 
+type: object
+properties:
+  fulfillment_status:
+    description: The statuses of fulfillment during which this term is applicable.
+    type: array
+    items:
+      $ref: "#/components/schemas/FulfillmentStatus"
+  refund_eligible:
+    description: Indicates if a cancellation will result in a refund
+    type: boolean

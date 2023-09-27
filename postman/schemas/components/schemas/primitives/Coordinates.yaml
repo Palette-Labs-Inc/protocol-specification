@@ -1,0 +1,11 @@
+description: Defines a latitudinal and longitudinal point in space 
+type: object
+properties:
+  latitude:
+    type: number
+    format: double
+    description: The latitude coordinate.
+  longitude:
+    type: number
+    format: double
+    description: The longitude coordinate

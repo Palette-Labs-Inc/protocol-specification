@@ -1,0 +1,28 @@
+summary: create delivery
+tags:
+  - Seller Supporting Node (SSN)
+description: The <code>BSN</code> creates a delivery
+requestBody:
+  $ref: '#/components/requestBodies/CreateDelivery'
+responses:
+  '200':
+    headers:
+      X-Stamp: 
+        $ref: '#/components/headers/X-Stamp'
+    description: need to replace with actual schema. Using [Uber Direct](https://developer.uber.com/docs/deliveries/api-reference/daas#tag/Delivery/paths/~1customers~1%7Bcustomer_id%7D~1deliveries/post) as reference
+    content:
+      application/json:
+        schema:
+            type: string
+  404:
+    description: No data found for the provided value
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error.yaml'
+  500:
+    description: Unexpected error
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error.yaml'

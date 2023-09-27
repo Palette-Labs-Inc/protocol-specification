@@ -1,0 +1,32 @@
+title: Error
+type: object
+required:
+  - message
+properties:
+  display_message:
+    description: A human readable error message
+    type: string
+  error_code:
+    description: A specific error code
+    type: string
+    enum:
+      - INTERNAL_SERVER_ERROR # A general server error occurred.
+      - UNAUTHORIZED # A general authorization error occurred.
+      - CERTIFICATE_EXPIRED # The provided authentication signature was signed by an expired or inactive registrant
+      - FORBIDDEN # request attempted to fetch a forbidden resource
+      - BAD_REQUEST # A general error occurred with the request.
+      - INCORRECT_TYPE # The value provided in the request is the wrong type. For example, a string instead of an integer.
+      - INVALID_PAGINATION_ARGUMENTS # The pagination argument is incorrect
+      - MISSING_REQUIRED_PARAMETER # The request is missing a required path, query, or body parameter.
+      - UNKNOWN_QUERY_PARAMETER # The query parameters provided is invalid for the requested endpoint.
+      - VALUE_REGEX_MISMATCH # The provided value does not match an expected regular expression.
+      - VALUE_TOO_SHORT # The provided string value is shorter than the minimum length allowed.
+      - VALUE_TOO_LONG # The provided string value is longer than the maximum length allowed.
+      - VALUE_TOO_LOW # The provided value is less than the supported minimum.
+      - VALUE_TOO_HIGH # The provided value is greater than the supported maximum.
+      - VALUE_EMPTY # The provided value has a default (empty) value such as a blank string.
+      - INVALID_CONTENT_TYPE # Invalid content type header.
+      - BLOCKED_BY_SERVER # This SSN de-federated the requesting BSN.
+  field:
+    description: The name of the field provided in the original request (if any) that the error pertains to.
+    type: string

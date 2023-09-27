@@ -1,0 +1,30 @@
+summary: initialize payment
+tags:
+  - Seller Supporting Node (SSN)
+description: The <code>Buyer</code> initializes the payment flow
+requestBody:
+  $ref: '#/components/requestBodies/CreatePaymentIntent'
+responses:
+  '200':
+    $ref: '#/components/responses/CreatePaymentIntent'
+    headers:
+      X-Stamp: 
+        $ref: '#/components/headers/X-Stamp'
+  404:
+    description: No data found for the provided value
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error.yaml'
+  410:
+    description: The provided terms are expired. Please call the /GET cart/:cart_id endpoint should be called to refresh the terms.
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error.yaml'
+  500:
+    description: Unexpected error
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error.yaml'

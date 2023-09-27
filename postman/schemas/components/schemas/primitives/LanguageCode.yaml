@@ -1,0 +1,5 @@
+title: Language Code
+type: string
+description: The code indicating a language preference, in [BCP 47 format](https://tools.ietf.org/html/bcp47#appendix-A). For example, en-US or fr-CA.
+enum:
+    - en-US

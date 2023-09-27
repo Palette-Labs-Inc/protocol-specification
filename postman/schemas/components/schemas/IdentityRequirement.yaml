@@ -1,0 +1,7 @@
+title: Identity Requirement
+description: Identification or verification requirements at a waypoint along a couriers journey.
+type: object
+properties: 
+    minimum_age: 
+        description: Minimum age in years that must be verified for this delivery. (e.g. 21 for an alocohol delivery in the US)
+        type: integer

@@ -1,0 +1,27 @@
+description: The payment intent object
+content:
+    application/json:
+    schema:
+        type: object
+        properties: 
+        payment_sheet_params:
+            description: returns information used by a mobile client to initialize a Stripe payment gateway
+            type: object
+            properties:
+                paymentIntent:
+                    type: string
+                ephemeralKey:
+                    type: string
+                publishableKey:
+                    type: string
+                customer:
+                    type: string
+            required: 
+                - paymentIntent
+                - ephemeralKey # the stripe customer ephemeral key
+                - publishableKey # the stripe publishable key
+        cart:
+            $ref: '#/components/schemas/Cart' # included for ease of accessing merchant data in response body for payment sheet info on the client
+    required:
+        - payment_sheet_params
+        - cart

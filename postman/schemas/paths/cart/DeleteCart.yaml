@@ -1,0 +1,18 @@
+summary: delete a cart
+tags:
+  - Seller Supporting Node (SSN)
+responses:
+  '204':
+    description: The cart was successfully deleted
+  404:
+    description: No data found for the provided value
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error.yaml'
+  500:
+    description: Unexpected error
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error.yaml'

@@ -1,0 +1,18 @@
+title: Physical Attirbutes
+description: Represents the size of a physical item or a collection of physical items.
+type: object
+properties:
+    size: 
+        description: Approximate size of item
+        type: string
+        enum: 
+            - SMALL # You can carry it with one hand e.g. bottle of water.
+            - MEDIUM # You need a tote bag to carry it e.g. retail bag.
+            - LARGE # You need two hands to carry it e.g. computer monitor.
+            - X_LARGE # You will need to make multiple trips to/from a vehicle to transport e.g. grocery order. Specifying X_LARGE will cause dispatch to only couriers using a car or larger (no walkers/bikes/scooters/etc…).
+    dimensions:
+        $ref: '#/components/schemas/Dimensions'
+    weight:
+        description: weight in centimeters (cm)
+        type: integer
+        minimum: 1

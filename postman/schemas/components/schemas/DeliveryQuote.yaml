@@ -1,0 +1,36 @@
+title: Delivery estimate
+description: Defines the estimated fees and times associated with an availabile delivery
+type: array
+items:
+  type: object
+  properties:
+    id: 
+      description: Id of the delivery quote
+      type: string
+    fee:
+      $ref: '#/components/schemas/Fee'
+    fee_components:
+      type: array
+      minItems: 1
+      items: 
+        $ref: '#/components/schemas/DeliveryFeeComponent'
+    delivery_time:
+      type: integer
+      format: int64
+      description: Unix timestamp representing the estimated delivery time. Represented in the local time of the delivery address.
+    pickup_time:
+      type: integer
+      format: int64
+      description: Unix timestamp representing the estimated pickup time. Represented in the local time of the pickup address.
+    expiration_date:
+      type: integer
+      format: int64
+      description: Unix timestamp representing the expiration date after which the quote will no longer be accepted.
+    pickup_duration:
+      description: Estimated minutes from now until the courier will arrive at the pickup_address
+      type: integer
+      format: int64
+    dropoff_duration:
+      description: Estimated minutes from now until the courier will arrive at the dropoff_address.
+      type: integer
+      format: int64

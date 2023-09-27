@@ -1,0 +1,4 @@
+title: Ethereum Address
+type: string
+description: Ethereum address
+pattern: ^0x[0-9a-fA-F]{40}$

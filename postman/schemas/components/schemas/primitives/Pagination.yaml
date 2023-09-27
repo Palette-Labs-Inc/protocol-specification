@@ -1,0 +1,23 @@
+title: Pagination
+description: pagination response used to reduce server load in queries to Seller Supporting Nodes
+type: object
+properties:
+  total:
+    type: integer
+  lastPage:
+    type: integer
+  currentPage:
+    type: integer
+  perPage:
+    type: integer
+  prevPage:
+    type: integer
+    nullable: true
+  nextPage:
+    type: integer
+    nullable: true
+required:
+  - total
+  - lastPage
+  - currentPage
+  - perPage

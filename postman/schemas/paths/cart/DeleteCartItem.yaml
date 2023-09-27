@@ -1,0 +1,23 @@
+summary: delete a cart item
+tags:
+  - Seller Supporting Node (SSN)
+responses:
+  '200':
+    $ref: '#/components/responses/NewCart'
+    headers:
+      X-Stamp: 
+        $ref: '#/components/headers/NodeAuth'
+  '204':
+    description: The cart is now empty
+  404:
+    description: No data found for the provided value
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error.yaml'
+  500:
+    description: Unexpected error
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error.yaml'

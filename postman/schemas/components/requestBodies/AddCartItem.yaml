@@ -1,0 +1,30 @@
+content:
+  application/json:
+    schema:
+      description: Represents the action of a <code>Buyer</code> to add an <code>CatalogItem</code> to a <code>Cart</code>. 
+      type: object
+      properties:
+        catalog_items:
+          minItems: 1
+          type: array
+          items:
+            type: object
+            properties:
+              item_id:
+                description: the <code>CatalogItemId</code> from the <code>CatalogItem</code> selection
+                $ref: '#/components/schemas/CatalogItemId'
+              quantity:
+                type: integer
+                description: The updated quantity value for the item
+                format: int32
+              catalog_item_modifiers: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    catalog_item_modifier_id:
+                      $ref: '#/components/schemas/CatalogItemModifierId'
+                    quantity: 
+                      type: integer
+                      description: The updated quantity value for the item modifier
+                      format: int32

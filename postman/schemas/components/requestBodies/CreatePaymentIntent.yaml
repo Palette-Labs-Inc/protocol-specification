@@ -1,0 +1,15 @@
+content:
+  application/json:
+    schema:
+      description: Represents the action of a <code>Buyer</code> to pay for their cart
+      type: object
+      properties:
+        cart_id:
+          description: the <code>CartId</code> for the intended order
+          $ref: '#/components/schemas/CartId'
+        terms_id:
+          description: A reference to the most recent terms from the SSN during cart population
+          $ref: '#/components/schemas/TermsId'
+        customer:
+          description: The customer associated with this order
+          $ref: '#/components/schemas/Customer'

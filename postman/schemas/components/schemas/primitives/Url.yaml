@@ -1,0 +1,4 @@
+title: URL
+description: Represents an RFC 3986-compliant URI string. 
+type: string
+pattern: ^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$

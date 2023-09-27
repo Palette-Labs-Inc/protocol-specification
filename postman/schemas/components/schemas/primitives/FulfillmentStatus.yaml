@@ -1,0 +1,10 @@
+title: Fulfillment Status
+description: Defines the status of an order
+type: string
+enum:
+  - PENDING # the initial state of a new order
+  - CONFIRMED_BY_MERCHANT # the state of an order after it has reached the CONFIRMED_BY_MERCHANT
+  - DECLINED_BY_MERCHANT # the state of an order if a merchant recieves it and is unable to provide the product(s) or service(s). Typically, a refund would occur after this state.
+  - IN_PROGRESS # the state of an order when a merchant is preparing the product(s) or service(s)
+  - COMPLETED_BY_MERCHANT # the state of an order when the merchant is ready to hand off the product or service to the customer or courier
+  - SCHEDULED_BY_MERCHANT # the items in this order are scheduled for fulfillment at later time.

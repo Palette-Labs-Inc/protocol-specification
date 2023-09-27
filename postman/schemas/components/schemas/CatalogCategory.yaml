@@ -1,0 +1,28 @@
+title: Catalog Category
+description: A category to which a <code>CatalogItem</code> instance belongs. Used to group items for ease in exlporations.
+type: object
+properties:
+    id: 
+        description: A unique identifier for this <code>CatalogCategory</code>
+        type: string
+    name: 
+        description: The category name. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
+        type: string
+        maxLength: 255
+    description:
+        description: The category description.
+        type: string
+        maxLength: 4096
+    images: 
+        type: array
+        items: 
+            $ref: '#/components/schemas/ImageFile'
+    item_ids: 
+        description: A list of <code>CatalogItem</code>'s affiliated with this category
+        type: array
+        items:
+            $ref: '#/components/schemas/CatalogItemId'
+    ordinal: 
+        description: Determines where this <code>CatalogCategory></code> appears in the <code>Catalog</code>
+        type: integer
+        format: int32

@@ -1,0 +1,2 @@
+# Improvement Proposals
+This document includes links to proposals whose design decisions are relevant to the current protocol state. Our improvement proposal process is largely based off of [Ethereum Improvement Proposals (EIPs)](https://github.com/ethereum/EIPs) and [Python Enhancement Proposals (PEPs)](https://peps.python.org/pep-0000/)

@@ -1,0 +1,15 @@
+title: Cart Fulfillment Option
+description: An available fulfillment option for a Buyers Cart
+type: object
+properties:
+    title: 
+        description: A human-readable title for the fulfillment option
+        type: string
+    fulfillment_mode:
+        $ref: '#/components/schemas/FulfillmentMode'
+    estimated_cost:
+        $ref: '#/components/schemas/Money'
+required: 
+    - title
+    - fulfillment_mode
+    - estimated_cost

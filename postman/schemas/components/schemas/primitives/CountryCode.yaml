@@ -1,0 +1,5 @@
+title: Country Code
+type: string
+description: A country code, in the two-letter format of [ISO 3166](https://www.iso.org/iso-3166-country-codes.html). For example, US or JP.
+enum:
+  - US

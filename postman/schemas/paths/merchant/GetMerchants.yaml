@@ -1,0 +1,27 @@
+summary: get merchants
+tags:
+  - Seller Supporting Node (SSN)
+description: The <code>BSN</code> broadcasts the customer's request for merchants offering products or services
+requestBody:
+  $ref: '#/components/requestBodies/GetMerchants'
+parameters:
+  - $ref: '#/components/parameters/PaginationPageQueryParam'
+  - $ref: '#/components/parameters/PaginationPageOffsetQueryParam'
+responses:
+  '200':
+    $ref: '#/components/responses/GetMerchants'
+    headers:
+      X-Stamp:
+        $ref: '#/components/headers/X-Stamp'
+  404:
+    description: No data found for the provided value
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error'
+  500:
+    description: Unexpected error
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error'

@@ -1,0 +1,13 @@
+title: Provider Type
+description: Defines the provider type. The network policy should contain codes for all of the provider sectors or industries supported by the network. For the sake of performance, network members should take considerable time determining industry code granualrity. If industry codes are too broad, for example "delivery", search intents will be broadcast to Seller Supporting Node (SSN)''s who do not support the Buyer Supporting Node (BSN)s intended query. If industry codes are too narrow, for example, a industry code for all merchants in a region, a large number of entries will need to be made for each Seller Supporting Node (SSN). It is recommended to collaborate with a core team member in deciding industry codes to ensure relevance, performance, and costs are balanced.
+type: object
+properties:
+  name:
+    description: Name of the provider type
+    type: string
+  code:
+    description: A code for the provider type
+    type: string
+    enum:
+      - MERCHANT
+      - COURIER

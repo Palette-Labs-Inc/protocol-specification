@@ -1,0 +1,26 @@
+title: Cart Fulfillment
+type: object
+description: The fulfillment data for the Cart
+properties:
+  available_fulfillment_methods:
+    description: The available fulfillment methods for this cart.
+    type: array
+    items:
+      $ref: '#/components/schemas/CartFulfillmentOption'
+  selected_fulfillment_method:
+    description: The currently selected fulfillment method for this cart
+    $ref: '#/components/schemas/CartFulfillmentOption'
+  merchant_details:
+    $ref: '#/components/schemas/Merchant' # included for ease of display by BSN client.
+  customer_address:
+    description: The location of the customer
+    $ref: '#/components/schemas/CustomerLocation'
+  fulfillment_time: 
+    type: integer
+    format: int64
+    minimum: -1
+    description: Unix timestamp in seconds representing when the order is scheduled to be availed. A value of -1 suggests that the products or services will be fulfilled as soon as possible. 
+required:
+  - available_fulfillment_methods
+  - selected_fulfillment_method
+  - merchant_details

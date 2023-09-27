@@ -1,0 +1,16 @@
+title: Dimensions
+type: object
+description: Struct that contains dimensions describing a physical item.
+properties: 
+    length:
+        description: length in centimeters (cm)
+        type: integer
+        minimum: 1
+    height:
+        description: height in centimeters (cm)
+        type: integer
+        minimum: 1
+    depth: 
+        description: depth in centimeters (cm)
+        type: integer
+        minimum: 1

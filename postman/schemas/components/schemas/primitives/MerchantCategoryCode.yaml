@@ -1,0 +1,10 @@
+title: Merchant Category Code
+description: A four-digit number that describes the kind of goods or services sold at the location. The [merchant category code (MCC)](https://www.iso.org/standard/33365.html) of the merchant is standardized by ISO 18245. For example, 5045, for a location that sells computer goods and software.
+          <ul>
+            <li>[USDA MCC directory](https://www.dm.usda.gov/procurement/card/card_x/mcc.pdf)</li>
+            <li>[Visa Merchant Data Standards Manual](https://usa.visa.com/content/dam/VCOM/download/merchants/visa-merchant-data-standards-manual.pdf)</li>
+            <li>[Citibank MCC list](https://www.citibank.com/tts/solutions/commercial-cards/assets/docs/govt/Merchant-Category-Codes.pdf)</li>
+          </ul>
+type: string
+minLength: 4
+maxLength: 4

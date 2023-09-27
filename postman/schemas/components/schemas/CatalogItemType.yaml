@@ -1,0 +1,9 @@
+title: Catalog Item Type
+description: The available <code>CatalogItem</code> types. Defined by global network policies.
+type: string
+enum: 
+    - ALCOHOL # represents an alcoholic beverage (e.g. beer)
+    - FOOD # represents a food item (e.g. Pizza)
+    - REGULAR # represents a regular item (e.g. T-shirt)
+    - SCHEDULED_SERVICE (e.g. a lawn service or delivery service)
+    - ON_DEMAND_SERVICE (e.g. on-demand delivery)

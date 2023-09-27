@@ -1,0 +1,27 @@
+title: Merchant Group
+type: object
+description: Defines an entity that contains a group of Merchants
+properties:
+  id:
+    type: string
+    description: The unique ID of the <code>MerchantGroup</code> in the Seller Supporting Node's (SSN) system
+  ethereum_address:
+    $ref: '#/components/schemas/EthereumAddress'
+  business_name:
+    type: string
+    description: The overall name of the merchant groups business. (e.g. Wing Castle LLC.)
+  description:
+    type: string
+    description: A description of the merchant group and the type of services or products they offer to the network.
+  country_code:
+    $ref: '../shared/primitives/CountryCode'
+  language_code:
+      $ref: '#/components/schemas/LanguageCode'
+  currency_code:
+    $ref: '#/components/schemas/CurrencyCode'
+  status:
+    type: string
+    description: The merchant groups status
+    enum:
+      - ACTIVE
+      - INACTIVE

@@ -1,0 +1,18 @@
+description: A single merchant represented by the <code>Seller Supporting Node (SSN)</code>
+content:
+    application/json:
+        schema:
+            type: object
+            description: The catalog data for the merchant
+            properties: 
+                item:
+                    description: The <code>CatalogItem</code> affiliated with the
+                    $ref: '#/components/schemas/CatalogItem'
+                modifier_groups:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/CatalogModifierGroup'
+                modifier_items:
+                    type: array
+                    items:
+                    $ref: '#/components/schemas/CatalogItemModifier'

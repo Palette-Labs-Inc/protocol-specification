@@ -1,0 +1,19 @@
+title: Cell Phone
+description: an object representing an [E.164](https://en.wikipedia.org/wiki/E.164) formatted cell phone number
+properties:
+  country_phone_code:
+    description: The country phone code in E.164 format (e.g., +1 for the United States).
+    type: string
+    pattern: '^\+\d+$'
+  cell_phone_number:
+    description: The local cell phone number.
+    type: string
+    pattern: '^\d+$'
+  extension:
+    description: An optional extension or additional digits (if applicable).
+    type: string
+    pattern: '^\d*$'
+required:
+  - countryCode
+  - nationalNumber
+additionalProperties: false

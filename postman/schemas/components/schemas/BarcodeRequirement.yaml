@@ -1,0 +1,14 @@
+title: Barcode Requirement
+type: object
+properties: 
+    value: 
+        description: String value encoded in the barcode.
+        type: string
+    barcode_type: 
+        type: string
+        description: Type of the barcode.
+        enum:
+            - CODE39
+            - CODE39_FULL_ASCII
+            - CODE128
+            - QR
