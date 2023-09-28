@@ -12,9 +12,10 @@
     - Completely rethink payment infrastructure or implement a payment gateway service that handles payments and payouts to involved parties.
     - If this is left up to the `BSN` it could introduce complexities. The `BSN` would have to self-manage Orders and their affiliated fulfillment orders on their own server. 
 - [ ] Decentralized reputation. If reviews are sent to an `SSN`, the `SSN` may manipulate the data to increase order frequency to their server.
- - [ ] Decentralized Identity. It would be nice to have something like [ENS](https://app.ens.domains/) but that would be bad to have addresses stored on ENS in public.
+- [ ] Decentralized Identity. It would be nice to have something like [ENS](https://app.ens.domains/) but that would be bad to have addresses stored on ENS in public.
 
 # API Design
+- [x] Draft terms and policies concepts.
 - [ ] Draft Order / Purchase APIs.
 - [ ] Draft Fulfillment APIs.
 - [ ] Draft Post-Fulfillment APIs.
@@ -26,7 +27,6 @@
 - [ ] Draft `BSN` CustomerAddress specification. Must be defined by protocol spec b/c addresses are required inputs for many shipment / delivery services.
 - [ ] Draft a /GET product media endpoint. 
 - [ ] Add multi-media support for `Catalog`s, `CatalogItem`s, etc. Multi-media allows for a more diverse and immersive set of Mobile Clients. Once done, design advanced `CatalogSearch` that can query for `CatalogItem`s with specific mediaTypes.
-- [ ] Draft terms and policies concepts.
 - [ ] Draft customer support concepts / APIs.
 
  
